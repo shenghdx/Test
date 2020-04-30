@@ -1,0 +1,18 @@
+server:
+   port: 8030
+spring:
+   application:
+      name: springcloud-hystrix-turbine
+#eureka相关配置
+eureka:
+   client:
+      service-url:
+         defaultZone: http://user:password123@localhost:8761/eureka
+   instance:
+      prefer-ip-address: true
+#Turbine相关配置
+turbine:
+   aggregator:
+      clusterConfig: default
+   appConfig: consumer-movie-ribbon-with-hystrix,consumer-movie-feign-with-hystrix
+   clusterNameExpression: "'default'"  #new String("default")

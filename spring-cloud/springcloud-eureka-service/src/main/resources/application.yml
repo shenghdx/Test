@@ -1,0 +1,20 @@
+#安全认证配置
+spring:
+   security:
+      basic:
+         enabled: true
+      user:
+         name: user
+         password: password123
+server:
+   port: 8761
+#eureka客户端连接配置
+eureka:
+   client:
+      #是否向服务注册中心注册自己 
+      register-with-eureka: false
+      #是否检索服务
+      fetch-registry: false
+      service-url:
+         #注册中心地址
+         defaultZone: http://user:password123@localhost:8761/eureka/

@@ -1,0 +1,33 @@
+server:
+  port: 8041
+spring:
+  application:
+      name: consumer-movie-feign-with-hystrix
+#@RibbonClient(name = "provider-user") 与name相同
+provider-user:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.qxj.configuration.RandomRule_QXJ
+#eureka客户端连接配置
+eureka:
+   client:
+      #打开eureka健康检查
+      healthcheck:
+         enabled: true
+      service-url:
+      #注册中心地址
+         defaultZone: http://user:password123@localhost:8761/eureka
+   instance:
+      #将ip注册到eureka上
+      prefer-ip-address: true
+      #微服务向eureka注册实例名${spring.cloud.client.ip-address} 表示ip地址 spring2.0以上为ip-address
+      instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}
+#默认的feign功能中，熔断开关是关闭的，所以，熔断器hystrix的开关需要手动打开
+feign:
+   hystrix:
+      enabled: true
+#开放health,info,hystrix.stream页面路径访问 http://localhost:8011/actuator/hystrix.stream
+management: 
+  endpoints: 
+    web: 
+      exposure: 
+        include: health,info #根据需求增删路径
